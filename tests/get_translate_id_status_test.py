@@ -267,6 +267,7 @@ def test_get_status_for_foreign_task_as_admin(base_url, signin_user):
         "Формирование голоса",
         "Формирование видео",
         "Завершено",
+        "Ошибка",
         "Неизвестно"
     ], f"Некорректный статус задачи: {response_data['status']}"
 
