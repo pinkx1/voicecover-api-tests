@@ -123,34 +123,36 @@ def test_registration_with_password_too_short(base_url):
     )
 
 
-def test_registration_with_password_min_length(base_url, cleanup_new_user_no_activation):
-    email = generate_unique_email()
-    password = "123456"  # Ровно 6 символов
-    payload = {"email": email, "password": password, "utm": "test-utm"}
+def test_registration_with_password_min_length(base_url, cleanup_new_user):
+    try:
+        email = generate_unique_email()
+        password = "123456"  # Ровно 6 символов
+        payload = {"email": email, "password": password, "utm": "test-utm"}
 
-    response = requests.post_request(base_url + "/auth/signup", json=payload)
+        response = requests.post_request(base_url + "/auth/signup", json=payload)
 
-    assert response.status_code == 200, f"Ожидался статус код 200, получен: {response.status_code}"
-    response_data = response.json()
-    assert response_data == {"success": True}, f"Ожидался ответ: {{'success': True}}, получен: {response_data}"
+        assert response.status_code == 200, f"Ожидался статус код 200, получен: {response.status_code}"
+        response_data = response.json()
+        assert response_data == {"success": True}, f"Ожидался ответ: {{'success': True}}, получен: {response_data}"
+    finally:
+        cleanup_function = cleanup_new_user(email, password)
+        cleanup_function()
 
-    cleanup_user = cleanup_new_user_no_activation(email, password)
-    cleanup_user()
 
+def test_registration_with_password_max_length(base_url, cleanup_new_user):
+    try:
+        email = generate_unique_email()
+        password = "12345678901234567890"  # Ровно 20 символов
+        payload = {"email": email, "password": password, "utm": "test-utm"}
 
-def test_registration_with_password_max_length(base_url, cleanup_new_user_no_activation):
-    email = generate_unique_email()
-    password = "12345678901234567890"  # Ровно 20 символов
-    payload = {"email": email, "password": password, "utm": "test-utm"}
+        response = requests.post_request(base_url + "/auth/signup", json=payload)
 
-    response = requests.post_request(base_url + "/auth/signup", json=payload)
-
-    assert response.status_code == 200, f"Ожидался статус код 200, получен: {response.status_code}"
-    response_data = response.json()
-    assert response_data == {"success": True}, f"Ожидался ответ: {{'success': True}}, получен: {response_data}"
-
-    cleanup_user = cleanup_new_user_no_activation(email, password)
-    cleanup_user()
+        assert response.status_code == 200, f"Ожидался статус код 200, получен: {response.status_code}"
+        response_data = response.json()
+        assert response_data == {"success": True}, f"Ожидался ответ: {{'success': True}}, получен: {response_data}"
+    finally:
+        cleanup_function = cleanup_new_user(email, password)
+        cleanup_function()
 
 
 def test_registration_with_password_too_long(base_url):

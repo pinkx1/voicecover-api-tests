@@ -26,13 +26,6 @@ def test_get_my_data_successfully(base_url, signin_user):
     }
     response = requests.get_request(f"{base_url}/user/me/", headers=headers)
 
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
-
     # Шаг 3: Проверить статус код
     assert response.status_code == 200, (
         f"Ожидаемый статус код 200, получен: {response.status_code}"
@@ -79,13 +72,6 @@ def test_get_my_data_without_authorization(base_url):
         "accept": "application/json",
     }
     response = requests.get_request(f"{base_url}/user/me", headers=headers)
-
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
 
     # Шаг 2: Проверить статус код
     assert response.status_code == 401, (

@@ -127,13 +127,6 @@ def test_get_sub_translate_for_user_without_balance(base_url, signin_user):
         headers=headers
     )
 
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.text)
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
-
     # Шаг 3: Проверить, что сервер возвращает статус код 200
     assert response.status_code == 200, (
         f"Ожидаемый статус код 200, получен: {response.status_code}"
@@ -231,8 +224,6 @@ def test_get_sub_origin_for_user_without_balance(base_url, signin_user):
         "Содержимое файла оригинальных субтитров не соответствует ожидаемому. "
         f"Ожидаемое:\n{expected_subtitle_content.strip()}\n\nПолученное:\n{actual_content}"
     )
-
-    print("Оригинальные субтитры успешно проверены и соответствуют ожиданиям.")
 
 
 def test_get_preview_for_user_without_balance(base_url, signin_user):
@@ -372,13 +363,6 @@ def test_get_file_without_authorization(base_url):
         f"{base_url}/translate/{translation_id}/download/video_origin/",  # Пример типа файла
         headers=headers
     )
-
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
 
     # Шаг 3: Проверить, что сервер возвращает статус код 401
     assert response.status_code == 401, (

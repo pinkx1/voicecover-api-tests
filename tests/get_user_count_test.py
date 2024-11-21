@@ -86,13 +86,6 @@ def test_get_user_count_as_regular_user(base_url, signin_user):
     }
     response = requests.get_request(f"{base_url}/user/count/", headers=headers)
 
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
-
     # Шаг 3: Проверить, что сервер возвращает статус код 403
     assert response.status_code == 403, (
         f"Ожидаемый статус код 403, получен: {response.status_code}"

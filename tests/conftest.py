@@ -28,10 +28,9 @@ def create_user(base_url):
 
 @pytest.fixture
 def activate_user(base_url):
-
     def _activate_user(email):
         activation_code = None
-        for attempt in range(5):
+        for attempt in range(30):
             email_content = get_latest_email(email)
             if email_content:
                 for link in email_content.get("links", []):
@@ -105,16 +104,18 @@ def delete_user(base_url):
 
 @pytest.fixture
 def cleanup_new_user(base_url, activate_user, delete_user):
-
     def _cleanup_user(email, password):
         activate_user(email)
 
         def cleanup():
             signin_payload = {"username": email, "password": password}
             signin_response = requests.post_request(base_url + '/auth/signin', data=signin_payload)
+
             if signin_response.status_code == 200:
                 user_id = signin_response.json()["user"]["id"]
                 delete_user(user_id)
+            else:
+                print(f"Не удалось авторизоваться для удаления пользователя: {signin_response.status_code}")
 
         return cleanup
 

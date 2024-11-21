@@ -32,13 +32,6 @@ def test_get_all_users_without_parameters(base_url, signin_user):
         headers=headers
     )
 
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
-
     # Шаг 3: Проверить, что сервер возвращает статус код 200
     assert response.status_code == 200, (
         f"Ожидаемый статус код 200, получен: {response.status_code}"

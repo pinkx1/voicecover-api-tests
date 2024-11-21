@@ -20,7 +20,6 @@ def test_get_transactions_successfully(base_url, signin_user, add_balance):
     user = signin_user(user_email, user_password)
 
     # Используем user_id вместо id
-    print("Ответ функции signin_user:", user)
     assert "user_id" in user, "В ответе signin_user отсутствует ключ 'user_id'"
     user_id = user["user_id"]
     user_access_token = user["access_token"]
@@ -86,13 +85,6 @@ def test_transactions_pagination(base_url, signin_user, add_balance):
     response = requests.get_request(
         f"{base_url}/user/transactions/?offset={offset}&limit={limit}", headers=headers
     )
-
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
 
     # Шаг 4: Проверить статус код
     assert response.status_code == 200, (
@@ -166,13 +158,6 @@ def test_get_transactions_without_authorization(base_url):
     # Шаг 1: Выполнить GET-запрос без авторизации
     headers = {"accept": "application/json"}  # Без токена авторизации
     response = requests.get_request(f"{base_url}/user/transactions/", headers=headers)
-
-    # Вывод отладочной информации
-    print("Статус код ответа:", response.status_code)
-    try:
-        print("Тело ответа:", response.json())
-    except ValueError:
-        print("Ответ не является JSON:", response.text)
 
     # Шаг 2: Проверить, что сервер возвращает статус код 401
     assert response.status_code == 401, (

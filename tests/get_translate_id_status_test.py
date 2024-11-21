@@ -71,14 +71,12 @@ def test_get_status_for_new_translation(base_url, signin_user, add_translation, 
         assert response_settings.status_code == 200, (
             f"Не удалось настроить перевод, статус код: {response_settings.status_code}"
         )
-        print("Ответ настройки перевода:", response_settings.status_code, response_settings.json())
 
         # Шаг 4: Выполнить GET-запрос для получения статуса перевода
         response_status = requests.get_request(
             f"{base_url}/translate/{translation_id}/status/",
             headers=headers
         )
-        print("Ответ получения статуса перевода:", response_status.status_code, response_status.json())
 
         # Шаг 5: Проверить, что сервер возвращает статус код 200
         assert response_status.status_code == 200, (
@@ -88,7 +86,6 @@ def test_get_status_for_new_translation(base_url, signin_user, add_translation, 
         # Шаг 6: Проверить статус перевода
         response_data = response_status.json()
         assert "status" in response_data, "Ответ не содержит ключ 'status'"
-        print(f"Текущий статус перевода: {response_data['status']}")
         assert response_data["status"] in valid_statuses, (
             f"Неожиданный статус перевода: {response_data['status']}. Ожидаемые статусы: {valid_statuses}"
         )
@@ -127,14 +124,6 @@ def test_get_status_for_nonexistent_translation(base_url, signin_user):
         f"{base_url}/translate/{nonexistent_translation_id}/status/",
         headers=headers
     )
-
-    # Вывод отладочной информации
-    print("Ответ получения статуса для несуществующего ID:", response.status_code)
-    try:
-        response_data = response.json()
-        print("Тело ответа:", response_data)
-    except ValueError:
-        print("Тело ответа не является JSON:", response.text)
 
     # Шаг 4: Проверить, что сервер возвращает статус код 404
     assert response.status_code == 404, (
@@ -180,14 +169,6 @@ def test_get_status_with_invalid_id(base_url, signin_user):
         headers=headers
     )
 
-    # Вывод отладочной информации
-    print("Ответ получения статуса с некорректным ID:", response.status_code)
-    try:
-        response_data = response.json()
-        print("Тело ответа:", response_data)
-    except ValueError:
-        print("Тело ответа не является JSON:", response.text)
-
     # Шаг 4: Проверить, что сервер возвращает статус код 422
     assert response.status_code == 422, (
         f"Ожидаемый статус код 422 для некорректного значения ID, получен: {response.status_code}"
@@ -225,14 +206,6 @@ def test_get_status_without_authorization(base_url):
         f"{base_url}/translate/{translation_id}/status/",
         headers=headers
     )
-
-    # Вывод отладочной информации
-    print("Ответ получения статуса без авторизации:", response.status_code)
-    try:
-        response_data = response.json()
-        print("Тело ответа:", response_data)
-    except ValueError:
-        print("Тело ответа не является JSON:", response.text)
 
     # Шаг 3: Проверить, что сервер возвращает статус код 401
     assert response.status_code == 401, (
