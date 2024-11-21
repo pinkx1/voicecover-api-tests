@@ -2,6 +2,11 @@ name: Run API Tests
 
 on:
   workflow_dispatch:
+    inputs:
+      test_file:
+        description: "Optional: Name of a specific test file (e.g., test_example.py). Leave blank to run all tests."
+        required: false
+        default: ""
 
 jobs:
   test:
@@ -20,7 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run tests and generate HTML report
+      - name: Run tests with pytest
         env:
           MAILSAC_API_KEY: ${{ secrets.MAILSAC_API_KEY }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -32,7 +37,13 @@ jobs:
           TRANSLATION_ID: ${{ secrets.TRANSLATION_ID }}
           TRANSLATION_ID_NO_EDIT: ${{ secrets.TRANSLATION_ID_NO_EDIT }}
           URL: ${{ secrets.URL }}
-        run: pytest -v -s --html=report.html --self-contained-html
+        run: |
+          BASE_PATH="tests"
+          if [ "${{ github.event.inputs.test_file }}" == "" ]; then
+            pytest -v -s --html=report.html --self-contained-html
+          else
+            pytest -v -s "${BASE_PATH}/${{ github.event.inputs.test_file }}" --html=report.html --self-contained-html
+          fi
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v3
