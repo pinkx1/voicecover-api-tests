@@ -1,6 +1,6 @@
 curlify==2.2.1
 pytest==8.2.2
 python-dotenv==1.0.1
-
+pytest-html
 requests~=2.32.3
 utils~=1.0.2
