@@ -14,13 +14,13 @@ def test_signin_success(base_url):
     signin_payload = {"username": email, "password": password}
     signin_response = requests.post_request(base_url + '/auth/signin', data=signin_payload)
 
-    assert signin_response.status_code == 200, "Ожидается статус код 200 для успешной авторизации"
+    assert signin_response.status_code == 200, "Status code 200 is expected"
 
     response_data = signin_response.json()
-    assert "access_token" in response_data, "Ожидается, что в ответе будет 'access_token'"
-    assert "refresh_token" in response_data, "Ожидается, что в ответе будет 'refresh_token'"
-    assert "user" in response_data, "Ожидается, что в ответе будут данные пользователя"
-    assert response_data["user"]["email"] == email, "Ожидается, что email пользователя совпадает с переданным"
+    assert "access_token" in response_data, "It is expected that the response will have an 'access_token'"
+    assert "refresh_token" in response_data, “The response is expected to contain 'refresh_token'”
+    assert "user" in response_data, "It is expected that the response will contain the user's details"
+    assert response_data["user"]["email"] == email, "The user's email is expected to match the one passed in"
 
 
 def test_signin_unconfirmed_account(base_url, cleanup_new_user, delete_user):
