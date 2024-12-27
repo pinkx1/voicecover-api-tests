@@ -1,26 +1,26 @@
-1. **Успешная активация пользователя.**  
-   Проверка активации пользователя с корректным значением параметра `activate_code`.  
-   Ожидается, что сервер возвращает статус код `200`, а тело ответа содержит `{"success": true}`.
+1. **Successful user activation.**  
+   Verify user activation with a valid value for the `activate_code` parameter.  
+   The server is expected to return a status code `200` and the response body contains `{“success”: true}`.
 
-2. **Активация с некорректным кодом активации.**  
-   Проверка реакции сервера на использование неверного значения в параметре `activate_code`.  
-   Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит описание ошибки в формате:  
-   ```json
+2. **Activation with an invalid activation code.**  
+   Checking the server response to the use of an invalid value in the `activate_code` parameter.  
+   The server is expected to return a status code ``422`` and the response body contains a description of the error in the format:  
+   ``json
    {
-     "detail": [
+     { “detail”: [
        {
-         "loc": ["query", "activate_code"],
-         "msg": "Invalid activation code",
-         "type": "value_error"
+         { “loc”: [ “query”, “activate_code”,]
+         “msg": ‘Invalid activation code’,
+         “type": ”value_error”
        }
      ]
    }
-3. **Отсутствие параметра activate_code.**
-Проверка реакции сервера, если параметр `activate_code` отсутствует в запросе.
-Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит описание ошибки, указывающее на отсутствие обязательного параметра.
-4. **Пустое значение параметра activate_code**.
-Проверка реакции сервера на запрос с пустым значением параметра `activate_code` (например, `/auth/activate?activate_code=`).
-Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит описание ошибки.
-5. **Попытка повторной активации**.
-Проверка реакции сервера на повторную активацию ранее активированного кода.
-Ожидается, что сервер возвращает статус код `400` или `422`, а тело ответа содержит описание ошибки.
+3. **Lack of activate_code parameter.**
+Checks the server response if the `activate_code` parameter is missing from the request.
+The server is expected to return a status code of `422` and the response body contains an error description indicating the absence of the mandatory parameter.
+4. **Empty value of activate_code** parameter.
+Check the server's response to a request with an empty value for the `activate_code` parameter (e.g., `/auth/activate?activate_code=`).
+The server is expected to return a status code `422` and the response body contains a description of the error.
+5. **Reactivation Attempt**.
+Checks the server's response to reactivate a previously activated code.
+It is expected that the server returns status code `400` or `422` and the response body contains an error description.
