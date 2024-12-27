@@ -3,7 +3,7 @@
 ## Project Description
 
 This project contains autotests that test the functionality of the API. All tests are developed using Python version **3.11.9**
-## Подготовка к запуску
+## Preparing for launch
 
 ### Dependency installation
 
