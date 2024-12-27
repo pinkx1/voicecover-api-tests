@@ -1,24 +1,23 @@
-1. **Авторизация с корректными учетными данными.**  
-   Проверка успешного входа в систему с корректными email и паролем. Ожидается, что сервер возвращает статус код `200`, а тело ответа содержит `access_token`, `refresh_token` и данные пользователя.
+1. **Authorization with correct credentials.  
+   Verify successful login with correct email and password. The server is expected to return a status code `200` and the response body contains `access_token`, `refresh_token` and user data.
 
-2. **Попытка входа в неподтвержденный аккаунт.**  
-   Проверка реакции сервера на попытку авторизации пользователя с неподтвержденным email. Ожидается, что сервер возвращает статус код `403`, а тело ответа содержит сообщение о необходимости подтверждения аккаунта.
+2. **Attempting to log in to an unauthorized account.**  
+   Checking the server's response to an attempt to authorize a user with an unconfirmed email. It is expected that the server returns a status code `403` and the response body contains a message about the need to confirm the account.
 
-3. **Авторизация с незарегистрированным в системе email.**  
-   Проверка реакции сервера на попытку входа с email, который отсутствует в системе. Ожидается, что сервер возвращает статус код `401`, а тело ответа содержит сообщение об ошибке.
+3. **Authorization with unregistered email.**  
+   Checking the server's response to an attempt to log in with an email that is not in the system. The server is expected to return the status code `401` and the response body contains an error message.
 
-4. **Авторизация с неверным паролем.**  
-   Проверка реакции сервера на попытку входа с правильным email, но с некорректным паролем. Ожидается, что сервер возвращает статус код `401`, а тело ответа содержит сообщение об ошибке.
+4. **Authorization with invalid password.  
+   Checks the server response to a login attempt with a valid email but an invalid password. The server is expected to return a status code of `401` and the response body contains an error message.
 
-5. **Авторизация с пустым полем email.**  
-   Проверка реакции сервера на отсутствие значения в поле `email`. Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит сообщение об ошибке валидации.
+5. **Authorization with empty email field.  
+   Checking the server's response to the absence of a value in the `email` field. The server is expected to return status code `422` and the response body contains a validation error message.
 
-6. **Авторизация с пустым полем password.**  
-   Проверка реакции сервера на отсутствие значения в поле `password`. Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит сообщение об ошибке валидации.
+6. **Authorization with an empty password field.**  
+   Checking the server's response to the absence of a value in the `password` field. The server is expected to return a status code `422` and the response body contains a validation error message.
 
-7. **Авторизация с пустым телом запроса.**  
-   Проверка реакции сервера на отсутствие всех параметров в теле запроса. Ожидается, что сервер возвращает статус код `422`, а тело ответа содержит сообщение об ошибке валидации.
+7. **Authorization with an empty request body.  
+   Checking the server response for the absence of all parameters in the request body. The server is expected to return status code `422` and the response body contains a validation error message.
 
-8. **Авторизация с дополнительным параметром в теле запроса.**  
-   Проверка успешной авторизации, если в теле запроса присутствует несуществующий параметр (например, `extra_param`). Ожидается, что сервер игнорирует этот параметр, возвращает статус код `200`, а тело ответа содержит `access_token`, `refresh_token` и данные пользователя.
-
+8. **Authorization with an additional parameter in the body of the request.**  
+   Verify successful authorization if a non-existent parameter (e.g., `extra_param`) is present in the request body. The server is expected to ignore this parameter, return a status code `200`, and the response body contains `access_token`, `refresh_token` and user data.
