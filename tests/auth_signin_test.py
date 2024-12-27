@@ -18,7 +18,7 @@ def test_signin_success(base_url):
 
     response_data = signin_response.json()
     assert "access_token" in response_data, "It is expected that the response will have an 'access_token'"
-    assert "refresh_token" in response_data, “The response is expected to contain 'refresh_token'”
+    assert "refresh_token" in response_data, "The response is expected to contain 'refresh_token'"
     assert "user" in response_data, "It is expected that the response will contain the user's details"
     assert response_data["user"]["email"] == email, "The user's email is expected to match the one passed in"
 
